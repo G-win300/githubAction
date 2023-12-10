@@ -4,10 +4,23 @@ on: [push]
 jobs:
   run-shell-commands:
     runs-on: ubuntu-latest
-    steps: 
+    steps:
       - name: echo a string
         run: echo "Hello World"
       - name: Multiline Command
         run: |
           node -v
           npm -v
+  parallel-job-macos:
+    runs-on: macos-lasest
+    steps:
+      - name: View SWVersion
+        run: sw_vers
+  dependant-job:
+    runs-on: windows-latest
+    needs: run-shell-commands
+    steps:
+      - name: echo a string
+        run: Write-Output "Windows String"
+      - name: Error Step
+        run: doesnotexits
